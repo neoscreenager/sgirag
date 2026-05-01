@@ -1,0 +1,5 @@
+streamlit>=1.25.0
+chromadb>=0.3.26
+requests>=2.31.0
+PyPDF2>=3.0.1
+pdfplumber>=0.10.0

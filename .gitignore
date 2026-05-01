@@ -1,0 +1,7 @@
+__pycache__/
+pdfdata/
+*.pyc
+chromadbrag/
+.env
+*.log
+test_chroma/
