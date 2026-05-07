@@ -28,6 +28,7 @@ def render_sidebar(client: LocalLMStudioClient, index_status: dict[str, Any]) ->
     st.sidebar.markdown(f"**Base URL:** `{get_base_url()}`")
     st.sidebar.markdown(f"**LLM model:** `{client.llm_model_id}`")
     st.sidebar.markdown(f"**Embedding model:** `{client.embedding_model_id}`")
+    st.sidebar.markdown(f"**Langfuse tracing:** `{ 'enabled' if client.tracing_enabled else 'disabled' }`")
     st.sidebar.divider()
     st.sidebar.subheader("Index status")
     st.sidebar.write(f"Documents indexed: **{index_status.get('documents', 0)}**")
@@ -35,6 +36,15 @@ def render_sidebar(client: LocalLMStudioClient, index_status: dict[str, Any]) ->
     st.sidebar.write(f"Skipped: **{index_status.get('skipped', 0)}**")
     if st.sidebar.button("Rebuild index"):
         st.session_state.rebuild = True
+
+    st.sidebar.divider()
+    st.sidebar.subheader("Langfuse status")
+    langfuse_base_url = os.getenv("LANGFUSE_BASE_URL")
+    langfuse_public_key = os.getenv("LANGFUSE_PUBLIC_KEY")
+    langfuse_secret_key = os.getenv("LANGFUSE_SECRET_KEY")
+    st.sidebar.write(f"Tracing enabled: **{'yes' if client.tracing_enabled else 'no'}**")
+    st.sidebar.write(f"Langfuse base URL: **{langfuse_base_url or 'not set'}**")
+    st.sidebar.write(f"Auth configured: **{'yes' if langfuse_public_key and langfuse_secret_key else 'no'}**")
 
 
 def query_collection(collection: chromadb.api.models.Collection.Collection, client: LocalLMStudioClient, question: str) -> dict[str, Any]:

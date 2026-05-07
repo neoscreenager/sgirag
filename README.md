@@ -69,6 +69,16 @@ The app will use `http://127.0.0.1:1234/v1` by default. To override, set:
 $env:LOCAL_LM_BASE_URL = "http://127.0.0.1:1234/v1"
 ```
 
+To enable Langfuse tracing, set your Langfuse endpoint and optional credentials:
+
+```powershell
+$env:LANGFUSE_BASE_URL = "http://127.0.0.1:8000"
+$env:LANGFUSE_PUBLIC_KEY = "<your-public-key>"
+$env:LANGFUSE_SECRET_KEY = "<your-secret-key>"
+```
+
+If credentials are omitted, the app still attempts OTLP export to the Langfuse base URL.
+
 ## How it Works
 
 1. `vectorize.py` reads `pdfdata/` and converts PDF pages into text chunks.
